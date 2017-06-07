@@ -1,13 +1,12 @@
 import os
 import boto3
 
-import json
-
-bucket = os.environ.get('bucket')
-
 def handler(event, context):
+    print event
+    bucket = os.environ.get('bucket')
     s3_object = event['Records'][0]['s3']['object']['key']
     client = boto3.client('rekognition')
+    print "{}/{}".format(bucket, s3_object)
 
     rekognition_response = client.search_faces_by_image(
         CollectionId='cloudreach-faces',
@@ -29,4 +28,7 @@ def handler(event, context):
 
     # update map
 
-    return response
+    # delete object in s3
+
+    print match
+    return match

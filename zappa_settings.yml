@@ -18,8 +18,8 @@ dev_event:
         prefix: "upload/"
         events:
         - "s3:ObjectCreated:*"
-    envvironment_variables:
-        bucket: dev.bigbother
+    environment_variables:
+        bucket: "dev.bigbother"
     extra_permissions:
     - Effect: Allow
       Action: "rekognition:*"
