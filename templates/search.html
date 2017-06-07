@@ -1,0 +1,33 @@
+<!doctype html>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/search.css') }}">
+<title>bigbother | 🧀 say cheese</title>
+
+
+<form class="searchbox" action="">
+    <input type="search" placeholder="search.." />
+    <ul class="suggestions">
+        <li><a href="#">Richard Bennett</a></li>
+        <li><a href="#">Olivier Van Goethem</a></li>
+        <li><a href="#">Raid Sulaiman</a></li>
+        <li><a href="#">Hatim Abdalla</a></li>
+    </ul>
+</form>
+
+<div class="randomtext" id="randomtext"> 
+    random text.
+</div>
+
+<script>
+    var text_array = [
+        "i see you",
+        "say cheese 🧀",
+        "hey good lookin'",
+        "don't blink"
+        ];
+    var rand_div = document.getElementById("randomtext");
+    rand_div.innerHTML = text_array[Math.floor(Math.random()*text_array.length)];
+    rand_div.style.top = Math.floor((Math.random() * 460) + 1) + "px";
+    rand_div.style.left = Math.floor((Math.random() * 1460) + 1) + "px";
+</script>
+
+<div class="byline">A big bother , brought to you by Olivier, Richard, Hatim and Raid</div>

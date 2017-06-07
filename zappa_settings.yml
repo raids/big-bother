@@ -1,0 +1,26 @@
+dev:
+    app_function: app.app
+    aws_region: "eu-west-1"
+    profile_name: "default"
+    s3_bucket: "zappa-ucawi9e45"
+    certificate_arn: "arn:aws:acm:us-east-1:580501780015:certificate/acc0bfb3-668e-456d-b5ba-33f1d42f9c49"
+    domain: "dev.bigbother.co.uk"
+    project_name: "big-bother"
+dev_event:
+    aws_region: "eu-west-1"
+    profile_name: "default"
+    use_apigateway: False
+    s3_bucket: "zappa-ucawi9e45"
+    events:
+    - function: rekognise.handler
+      event_source:
+        arn: 'arn:aws:s3:::dev.bigbother'
+        prefix: "upload/"
+        events:
+        - "s3:ObjectCreated:*"
+    envvironment_variables:
+        bucket: dev.bigbother
+    extra_permissions:
+    - Effect: Allow
+      Action: "rekognition:*"
+      Resource: "*"
