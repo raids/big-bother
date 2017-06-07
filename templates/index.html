@@ -1,4 +1,32 @@
 <!doctype html>
-<title>EC2 Dashboard</title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
+<title>bigbother | 🧀 say cheese</title>
 
-<h3>big bother</h3>
+
+<form class="searchbox" action="">
+    <input type="search" placeholder="search.." />
+    <ul class="suggestions">
+        {% for person in people %}
+        <li><a href="{{ url_for('static',filename='styles/index.css') }}">{{ person }}</a></li>
+        {% endfor %}
+    </ul>
+</form>
+
+<div class="randomtext" id="randomtext">
+    random text.
+</div>
+
+<script>
+    var text_array = [
+        "i see you",
+        "say cheese 🧀",
+        "hey good lookin'",
+        "don't blink"
+        ];
+    var rand_div = document.getElementById("randomtext");
+    rand_div.innerHTML = text_array[Math.floor(Math.random()*text_array.length)];
+    rand_div.style.top = Math.floor((Math.random() * 460) + 1) + "px";
+    rand_div.style.left = Math.floor((Math.random() * 1460) + 1) + "px";
+</script>
+
+<div class="byline">A big bother , brought to you by Olivier, Richard, Hatim and Raid</div>
