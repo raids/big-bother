@@ -14,7 +14,8 @@ def index():
 
 @app.route('/person/<person_id>', methods=['GET'])
 def person(person_id):
-    return person_id
+    person = api.find_person_by_name(person_id)
+    return render_template('person.html', person=person)
 
 
 if __name__ == '__main__':

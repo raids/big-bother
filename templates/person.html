@@ -3,28 +3,24 @@
 <title>bigbother | 🧀 say cheese</title>
 
 
-<form class="searchbox" action="">
-    <input id="searchbox" type="search" placeholder="search.." />
-    <ul class="suggestions">
-        {% for person in people %}
-        <li><a href="{{ url_for('person', person_id=person) }}">{{ person }}</a></li>
-        {% endfor %}
-    </ul>
-</form>
+<div class="persontext" id="persontext">
+    {{ person.fullName }}
+    <br>
+    {{ person.room.name }}, {{ person.room.city }}
+    <br>
+    last seen: {{ person.lastSeen }}
+</div>
 
 <div class="randomtext" id="randomtext">
     random text.
 </div>
 
 <script>
-    function setFocusToTextBox(){
-        document.getElementById("searchbox").focus();
-    }
     var text_array = [
-        "i see you",
-        "say cheese 🧀",
-        "hey good lookin'",
-        "don't blink"
+        "found ya!",
+        "there's no use hiding",
+        "all seeing eye and all that",
+        "run, run as fast as you can"
         ];
     var rand_div = document.getElementById("randomtext");
     rand_div.innerHTML = text_array[Math.floor(Math.random()*text_array.length)];

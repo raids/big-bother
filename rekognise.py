@@ -1,12 +1,18 @@
 import os
 import boto3
 
+from api_client import BigBotherAPIClient
+
+bucket = os.environ.get('bucket')
+
 def handler(event, context):
     print event
-    bucket = os.environ.get('bucket')
+
     s3_object = event['Records'][0]['s3']['object']['key']
+
     client = boto3.client('rekognition')
-    print "{}/{}".format(bucket, s3_object)
+
+    api = BigBotherAPIClient()
 
     rekognition_response = client.search_faces_by_image(
         CollectionId='cloudreach-faces',
@@ -19,16 +25,15 @@ def handler(event, context):
     )
 
     print "Number of matches found: {}".format(len(rekognition_response['FaceMatches']))
-    matched_face = rekognition_response['FaceMatches'][0]['Face']['FaceId']
 
-    match = {
-        "uploadedItem": s3_object,
-        "matchedFace": matched_face,
-    }
+    if len(rekognition_response['FaceMatches']) is 0:
+        return
 
-    # update map
+    matched_face_id = rekognition_response['FaceMatches'][0]['Face']['FaceId']
+    location = s3_object.split('/')[1]
 
-    # delete object in s3
+    person = api.find_person_by_face_id(matched_face_id)
+    updated_location = api.update_person_location(person['fullName'], location, 'London')
 
-    print match
-    return match
+    return updated_location
+

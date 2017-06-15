@@ -47,12 +47,13 @@ class BigBotherAPIClient(object):
             edge['node'] for edge in response["allRooms"]["edges"]
         ]
 
-    def find_person(self, full_name):
+    def find_person_by_name(self, full_name):
         query = gql('''
         query {{
-            findPerson(name: "{full_name}") {{
+            findPersonByName(name: "{full_name}") {{
                 fullName
                 lastSeen
+                rekognitionFaceId
                 room {{
                     name
                     city
@@ -61,8 +62,25 @@ class BigBotherAPIClient(object):
         }}
         '''.format(full_name=full_name))
         response = self.client.execute(query)
-        assert len(response['findPerson']) == 1, 'Person not found...'
-        return response['findPerson'][0]
+        assert len(response['findPersonByName']) == 1, 'Person not found...'
+        return response['findPersonByName'][0]
+
+    def find_person_by_face_id(self, face_id):
+        query = gql('''
+        query {{
+            findPersonByFaceId(rekognitionFaceId: "{face_id}") {{
+                fullName
+                lastSeen
+                rekognitionFaceId
+                room {{
+                    name
+                    city
+                }}
+            }}
+        }}
+        '''.format(face_id=face_id))
+        response = self.client.execute(query)
+        return response['findPersonByFaceId']
 
     def list_people_in_room(self, room_name, room_city):
         query = gql('''
